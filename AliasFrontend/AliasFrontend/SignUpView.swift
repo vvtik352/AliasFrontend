@@ -66,7 +66,7 @@ struct SignUpView: View {
                 }
                 
             }
-        }
+        }.accentColor(Color(.systemGray4))
     }
         
 }
