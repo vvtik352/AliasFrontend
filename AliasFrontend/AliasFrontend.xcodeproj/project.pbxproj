@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F4FC16D2A17DD5200609738 /* UserCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4FC16C2A17DD5200609738 /* UserCredentials.swift */; };
+		5F4FC16F2A17DD7E00609738 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4FC16E2A17DD7E00609738 /* SignUpViewModel.swift */; };
 		7C14E1FB2A0D411700012B5A /* AliasFrontendApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C14E1FA2A0D411700012B5A /* AliasFrontendApp.swift */; };
 		7C14E1FD2A0D411700012B5A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C14E1FC2A0D411700012B5A /* ContentView.swift */; };
 		7C14E1FF2A0D411800012B5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C14E1FE2A0D411800012B5A /* Assets.xcassets */; };
@@ -20,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5F4FC16C2A17DD5200609738 /* UserCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCredentials.swift; sourceTree = "<group>"; };
+		5F4FC16E2A17DD7E00609738 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		7C14E1F72A0D411700012B5A /* AliasFrontend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AliasFrontend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C14E1FA2A0D411700012B5A /* AliasFrontendApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasFrontendApp.swift; sourceTree = "<group>"; };
 		7C14E1FC2A0D411700012B5A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -44,6 +48,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5F4FC1702A18163500609738 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5F4FC16E2A17DD7E00609738 /* SignUpViewModel.swift */,
+				5F4FC16C2A17DD5200609738 /* UserCredentials.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		7C14E1EE2A0D411700012B5A = {
 			isa = PBXGroup;
 			children = (
@@ -63,7 +76,7 @@
 		7C14E1F92A0D411700012B5A /* AliasFrontend */ = {
 			isa = PBXGroup;
 			children = (
-				7C14E1FA2A0D411700012B5A /* AliasFrontendApp.swift */,
+				5F4FC1702A18163500609738 /* Model */,
 				7C14E1FC2A0D411700012B5A /* ContentView.swift */,
 				7C14E1FE2A0D411800012B5A /* Assets.xcassets */,
 				7C14E2002A0D411900012B5A /* Preview Content */,
@@ -73,6 +86,7 @@
 				7CCCDE642A1562F800C88135 /* TabBarView.swift */,
 				7CCCDE662A15637400C88135 /* Main.swift */,
 				7CDAC2E22A17946F00EDE017 /* RoomSettings.swift */,
+				7C14E1FA2A0D411700012B5A /* AliasFrontendApp.swift */,
 			);
 			path = AliasFrontend;
 			sourceTree = "<group>";
@@ -157,9 +171,11 @@
 			files = (
 				7CDAC2E32A17946F00EDE017 /* RoomSettings.swift in Sources */,
 				7C4164BD2A0E83FD000DB103 /* Login.swift in Sources */,
+				5F4FC16F2A17DD7E00609738 /* SignUpViewModel.swift in Sources */,
 				7C4164C12A0E8AC0000DB103 /* SignUpView.swift in Sources */,
 				7C4164BF2A0E8696000DB103 /* StartPage.swift in Sources */,
 				7C14E1FD2A0D411700012B5A /* ContentView.swift in Sources */,
+				5F4FC16D2A17DD5200609738 /* UserCredentials.swift in Sources */,
 				7CCCDE652A1562F800C88135 /* TabBarView.swift in Sources */,
 				7CCCDE672A15637400C88135 /* Main.swift in Sources */,
 				7C14E1FB2A0D411700012B5A /* AliasFrontendApp.swift in Sources */,
