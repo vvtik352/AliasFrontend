@@ -33,18 +33,12 @@ struct SignUpView: View {
                 SecureField("Password", text: $password)
                     .foregroundColor(.white)
                     .textFieldStyle(.plain)
-                //                                    .placeholder(when: password.isEmpty) {
-                //                                        Text("Password")
-                //                                            .foregroundColor(.white)
-                //                                            .bold()
-                //                                    }
                     .padding(.leading)
                     .bold()
-                
                 Rectangle()
                     .frame(width: 350, height: 1)
                     .foregroundColor(.white)
-                SecureField("Repeat password", text: $password)
+                SecureField("Repeat password", text: $repeatPassword)
                     .foregroundColor(.white)
                     .textFieldStyle(.plain)
                     .padding(.leading)

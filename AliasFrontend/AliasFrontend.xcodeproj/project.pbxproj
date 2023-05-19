@@ -14,6 +14,9 @@
 		7C4164BD2A0E83FD000DB103 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4164BC2A0E83FD000DB103 /* Login.swift */; };
 		7C4164BF2A0E8696000DB103 /* StartPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4164BE2A0E8696000DB103 /* StartPage.swift */; };
 		7C4164C12A0E8AC0000DB103 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4164C02A0E8AC0000DB103 /* SignUpView.swift */; };
+		7CCCDE652A1562F800C88135 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCCDE642A1562F800C88135 /* TabBarView.swift */; };
+		7CCCDE672A15637400C88135 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCCDE662A15637400C88135 /* Main.swift */; };
+		7CDAC2E32A17946F00EDE017 /* RoomSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDAC2E22A17946F00EDE017 /* RoomSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +28,9 @@
 		7C4164BC2A0E83FD000DB103 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		7C4164BE2A0E8696000DB103 /* StartPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPage.swift; sourceTree = "<group>"; };
 		7C4164C02A0E8AC0000DB103 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		7CCCDE642A1562F800C88135 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		7CCCDE662A15637400C88135 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		7CDAC2E22A17946F00EDE017 /* RoomSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +70,9 @@
 				7C4164BC2A0E83FD000DB103 /* Login.swift */,
 				7C4164BE2A0E8696000DB103 /* StartPage.swift */,
 				7C4164C02A0E8AC0000DB103 /* SignUpView.swift */,
+				7CCCDE642A1562F800C88135 /* TabBarView.swift */,
+				7CCCDE662A15637400C88135 /* Main.swift */,
+				7CDAC2E22A17946F00EDE017 /* RoomSettings.swift */,
 			);
 			path = AliasFrontend;
 			sourceTree = "<group>";
@@ -146,10 +155,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CDAC2E32A17946F00EDE017 /* RoomSettings.swift in Sources */,
 				7C4164BD2A0E83FD000DB103 /* Login.swift in Sources */,
 				7C4164C12A0E8AC0000DB103 /* SignUpView.swift in Sources */,
 				7C4164BF2A0E8696000DB103 /* StartPage.swift in Sources */,
 				7C14E1FD2A0D411700012B5A /* ContentView.swift in Sources */,
+				7CCCDE652A1562F800C88135 /* TabBarView.swift in Sources */,
+				7CCCDE672A15637400C88135 /* Main.swift in Sources */,
 				7C14E1FB2A0D411700012B5A /* AliasFrontendApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

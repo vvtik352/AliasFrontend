@@ -21,11 +21,17 @@ struct Login: View {
                     .ignoresSafeArea()
                 VStack(spacing: 20) {
                     TextField("Login", text: $login)
-                        .foregroundColor(.white)
+                        .foregroundColor(Color.white)
                         .textFieldStyle(.plain)
                         .padding()
                         .bold()
-                    
+                        .placeholder(when: login.isEmpty) {
+                                                Text("Login")
+                                                    .foregroundColor(Color(.systemGray4))
+                                                    .bold()
+                                                    .padding(.leading)
+                                            }
+
                     
                     Rectangle()
                         .frame(width: 350, height: 1)
@@ -33,18 +39,19 @@ struct Login: View {
                     SecureField("Password", text: $password)
                         .foregroundColor(.white)
                         .textFieldStyle(.plain)
-                    //                                    .placeholder(when: password.isEmpty) {
-                    //                                        Text("Password")
-                    //                                            .foregroundColor(.white)
-                    //                                            .bold()
-                    //                                    }
                         .padding(.leading)
                         .bold()
+                        .placeholder(when: password.isEmpty) {
+                                                Text("Password")
+                                                    .foregroundColor(Color(.systemGray4))
+                                                    .bold()
+                                                    .padding(.leading)
+                                            }
+                    
                     
                     Rectangle()
                         .frame(width: 350, height: 1)
                         .foregroundColor(.white)
-                    // add action
                     Button {
                     } label: {
                         Text("Login")
@@ -61,8 +68,20 @@ struct Login: View {
         }.accentColor(.black)
     }
         
+    
 }
-
+extension  View {
+    func placeholder<Content: View> (
+        when shuldShow: Bool,
+        alignment: Alignment = .leading,
+        @ViewBuilder placeholder: () -> Content) -> some View {
+            
+            ZStack(alignment: alignment) {
+                placeholder().opacity(shuldShow ? 1: 0)
+                self
+            }
+        }
+}
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
         Login()
