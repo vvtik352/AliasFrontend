@@ -45,6 +45,7 @@ class DataManager: ObservableObject {
                 print("Error: \(String(describing: response))")
             }
         }
+        
 
         task.resume()
     }
@@ -52,11 +53,8 @@ class DataManager: ObservableObject {
     func registerUser() {
         sendRequest(urlString: "http://localhost:8080/users/register") { [weak self] data in
             do {
-//                let tokenResponse = try JSONDecoder().decode(TokenResponse.self, from: data)
-//                print("JOPA",tokenResponse)
                 DispatchQueue.main.async {
                     self?.loginUser()
-//                    self?.token = tokenResponse.value
                     self?.isLoggedIn = true
                 }
             } catch {
@@ -89,7 +87,7 @@ class DataManager: ObservableObject {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization") // assuming token is a property in DataManager class
+        request.addValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
 
         do {
             let jsonData = try JSONEncoder().encode(gameRoomCreate)
@@ -104,8 +102,6 @@ class DataManager: ObservableObject {
                 print("Error occurred: \(String(describing: error))")
                 return
             }
-
-            print("Room type:\n \(data)")
             
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
                 print("Game room successfully created.")

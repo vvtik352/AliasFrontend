@@ -11,6 +11,7 @@
 		5F4FC16F2A17DD7E00609738 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4FC16E2A17DD7E00609738 /* DataManager.swift */; };
 		5F76984D2A192259008B61A5 /* TokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F76984C2A192259008B61A5 /* TokenResponse.swift */; };
 		5F76984F2A1924C1008B61A5 /* GameRoomCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F76984E2A1924C1008B61A5 /* GameRoomCreate.swift */; };
+		5F7698512A197F98008B61A5 /* GameRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7698502A197F98008B61A5 /* GameRoom.swift */; };
 		7C14E1FB2A0D411700012B5A /* AliasFrontendApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C14E1FA2A0D411700012B5A /* AliasFrontendApp.swift */; };
 		7C14E1FD2A0D411700012B5A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C14E1FC2A0D411700012B5A /* ContentView.swift */; };
 		7C14E1FF2A0D411800012B5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C14E1FE2A0D411800012B5A /* Assets.xcassets */; };
@@ -30,6 +31,7 @@
 		5F4FC16E2A17DD7E00609738 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		5F76984C2A192259008B61A5 /* TokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenResponse.swift; sourceTree = "<group>"; };
 		5F76984E2A1924C1008B61A5 /* GameRoomCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRoomCreate.swift; sourceTree = "<group>"; };
+		5F7698502A197F98008B61A5 /* GameRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRoom.swift; sourceTree = "<group>"; };
 		7C14E1F72A0D411700012B5A /* AliasFrontend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AliasFrontend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C14E1FA2A0D411700012B5A /* AliasFrontendApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasFrontendApp.swift; sourceTree = "<group>"; };
 		7C14E1FC2A0D411700012B5A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 				5F4FC16C2A17DD5200609738 /* UserCredentials.swift */,
 				5F76984C2A192259008B61A5 /* TokenResponse.swift */,
 				5F76984E2A1924C1008B61A5 /* GameRoomCreate.swift */,
+				5F7698502A197F98008B61A5 /* GameRoom.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CDAC2E32A17946F00EDE017 /* RoomSettings.swift in Sources */,
+				5F7698512A197F98008B61A5 /* GameRoom.swift in Sources */,
 				7C4164BD2A0E83FD000DB103 /* Login.swift in Sources */,
 				5F76984F2A1924C1008B61A5 /* GameRoomCreate.swift in Sources */,
 				5F4FC16F2A17DD7E00609738 /* DataManager.swift in Sources */,
