@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct RoomSettings: View {
+    @ObservedObject var dataManager = DataManager()
     @State private var roomName = ""
     @State private var isPrivate = false
     @State var myText: String = "invitation code"
@@ -66,6 +67,8 @@ struct RoomSettings: View {
                     }
                 }
                 Button {
+                    let room = GameRoomCreate(name: self.roomName, isPrivate: self.isPrivate)
+                    self.dataManager.createGameRoom(gameRoomCreate: room)
                 } label: {
                     Text("Save!")
                         .bold()

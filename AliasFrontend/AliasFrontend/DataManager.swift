@@ -10,26 +10,19 @@ import Foundation
 class DataManager: ObservableObject {
     @Published var userCredentials: UserCredentials = UserCredentials(name: "", email: "", password: "")
     @Published var isLoggedIn = false
+    @Published var token = ""
+    @Published var userID: String? = nil
 
-    func registerUser() {
-        // ensure that the password fields match
-        guard userCredentials.password == userCredentials.password else {
-            // handle non-matching passwords
-            print("Passwords don't match")
+    private func sendRequest(urlString: String, onSuccess: @escaping (_ data: Data) -> Void) {
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
             return
         }
 
-        // create the url with URL
-        let url = URL(string: "http://localhost:8080/users/register")!
-
-        // create the post request
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-
-        // Headers
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        // convert parameters to JSON and add to request body
         let parameters: [String: Any] = ["name": userCredentials.name, "email": userCredentials.email, "password": userCredentials.password]
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
@@ -38,72 +31,90 @@ class DataManager: ObservableObject {
             return
         }
 
-        // create dataTask using session object to send data to server
-        let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
-
-            guard error == nil else {
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            guard let data = data, error == nil else {
                 print("Error occurred: \(String(describing: error))")
                 return
             }
 
-            if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                print("Response data string:\n \(dataString)")
-            }
-            
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-                         DispatchQueue.main.async {
-                             self.isLoggedIn = true
-                         }
-                     }
-        })
+                DispatchQueue.main.async {
+                    onSuccess(data)
+                }
+            } else {
+                print("Error: \(String(describing: response))")
+            }
+        }
 
         task.resume()
     }
     
-    func loginUser(){
-        guard userCredentials.password == userCredentials.password else {
-            // handle non-matching passwords
-            print("Passwords don't match")
+    func registerUser() {
+        sendRequest(urlString: "http://localhost:8080/users/register") { [weak self] data in
+            do {
+//                let tokenResponse = try JSONDecoder().decode(TokenResponse.self, from: data)
+//                print("JOPA",tokenResponse)
+                DispatchQueue.main.async {
+                    self?.loginUser()
+//                    self?.token = tokenResponse.value
+                    self?.isLoggedIn = true
+                }
+            } catch {
+                print("Error decoding token: \(error)")
+            }
+        }
+    }
+
+    func loginUser() {
+        sendRequest(urlString: "http://localhost:8080/users/login") { [weak self] data in
+            do {
+                let tokenResponse = try JSONDecoder().decode(TokenResponse.self, from: data)
+                DispatchQueue.main.async {
+                    print("JOPAA",tokenResponse.value)
+                    self?.token = tokenResponse.value
+                    self?.isLoggedIn = true
+                }
+            } catch {
+                print("Error decoding token: \(error)")
+            }
+        }
+    }
+    
+    func createGameRoom(gameRoomCreate: GameRoomCreate) {
+        guard let url = URL(string: "http://localhost:8080/game-rooms/create") else {
+            print("Invalid URL")
             return
         }
 
-        let url = URL(string: "http://localhost:8080/users/login")!
-
-        // create the post request
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-
-        // Headers
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization") // assuming token is a property in DataManager class
 
-        // convert parameters to JSON and add to request body
-        let parameters: [String: Any] = ["name": userCredentials.name, "email": userCredentials.email, "password": userCredentials.password]
         do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+            let jsonData = try JSONEncoder().encode(gameRoomCreate)
+            request.httpBody = jsonData
         } catch let error {
             print(error.localizedDescription)
             return
         }
 
-        // create dataTask using session object to send data to server
-        let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
-
-            guard error == nil else {
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
                 print("Error occurred: \(String(describing: error))")
                 return
             }
 
-            if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                print("Response data string:\n \(dataString)")
-            }
+            print("Room type:\n \(data)")
             
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-                         DispatchQueue.main.async {
-                             self.isLoggedIn = true
-                         }
-                     }
-        })
+                print("Game room successfully created.")
+            } else {
+                print("Error: \(String(describing: response))")
+            }
+        }
 
         task.resume()
     }
+
 }

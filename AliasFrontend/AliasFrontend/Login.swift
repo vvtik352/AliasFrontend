@@ -38,7 +38,22 @@ struct Login: View {
                     Rectangle()
                         .frame(width: 350, height: 1)
                         .foregroundColor(.white)
+                    TextField("Email", text:  $dataManager.userCredentials.email)
+                        .foregroundColor(Color.white)
+                        .textFieldStyle(.plain)
+                        .padding()
+                        .bold()
+                        .placeholder(when: name.isEmpty) {
+                                                Text("Email")
+                                                    .foregroundColor(Color(.systemGray4))
+                                                    .bold()
+                                                    .padding(.leading)
+                                            }
 
+                    
+                    Rectangle()
+                        .frame(width: 350, height: 1)
+                        .foregroundColor(.white)
                     SecureField("", text:  $dataManager.userCredentials.password)
                         .foregroundColor(.white)
                         .textFieldStyle(.plain)
