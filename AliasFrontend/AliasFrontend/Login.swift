@@ -38,16 +38,8 @@ struct Login: View {
                     Rectangle()
                         .frame(width: 350, height: 1)
                         .foregroundColor(.white)
-                    TextField("Email", text: $dataManager.userCredentials.email)
-                        .foregroundColor(.white)
-                        .textFieldStyle(.plain)
-                        .padding()
-                        .bold()
-                    
-                    Rectangle()
-                        .frame(width: 350, height: 1)
-                        .foregroundColor(.white)
-                    SecureField("Password", text:  $dataManager.userCredentials.password)
+
+                    SecureField("", text:  $dataManager.userCredentials.password)
                         .foregroundColor(.white)
                         .textFieldStyle(.plain)
                         .padding(.leading)

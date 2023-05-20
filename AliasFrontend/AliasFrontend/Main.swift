@@ -27,6 +27,16 @@ struct Main: View {
                                 .font(.system(size:20, weight:.bold, design: .rounded))
                         }
                     }
+                    NavigationLink(value: "") {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 30, style: .continuous)
+                                .frame(width: 200, height: 70)
+                                .foregroundColor(Color.mint)
+                            Text("Join via code")
+                                .foregroundColor(.white)
+                                .font(.system(size:20, weight:.bold, design: .rounded))
+                        }
+                    }
                 }
             }
         }

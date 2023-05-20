@@ -19,6 +19,11 @@ struct TabBarView: View {
                     Text("Main")
 
                 }
+            RoomList()
+                .tabItem {
+                    Image(systemName: "person.3")
+                    Text("Rooms")
+                }
 
 //                .tabItem {
 //                    Image(systemName: "sparkle.magnifyingglass")
