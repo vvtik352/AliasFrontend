@@ -11,7 +11,7 @@ import SwiftUI
 
 struct SignUpView: View {
     
-    @StateObject var signUpVM = SignUpViewModel()
+    @StateObject var dataManager = DataManager()
 
     @State private var name = ""
     @State private var email = ""
@@ -25,7 +25,7 @@ struct SignUpView: View {
             print("Passwords don't match")
             return
         }
-        print("kkek")
+
         // create the url with URL
         let url = URL(string: "http://localhost:8080/users/register")!
 
@@ -67,7 +67,7 @@ struct SignUpView: View {
                 .foregroundStyle(.linearGradient(colors: [.black, .mint], startPoint: .top, endPoint: .bottomTrailing))
                 .ignoresSafeArea()
             VStack(spacing: 20) {
-                TextField("Name", text: $signUpVM.userCredentials.name)
+                TextField("Name", text: $dataManager.userCredentials.name)
                     .foregroundColor(.white)
                     .textFieldStyle(.plain)
                     .padding()
@@ -75,7 +75,7 @@ struct SignUpView: View {
                 Rectangle()
                     .frame(width: 350, height: 1)
                     .foregroundColor(.white)
-                TextField("Email", text: $signUpVM.userCredentials.email)
+                TextField("Email", text: $dataManager.userCredentials.email)
                     .foregroundColor(.white)
                     .textFieldStyle(.plain)
                     .padding()
@@ -84,7 +84,7 @@ struct SignUpView: View {
                 Rectangle()
                     .frame(width: 350, height: 1)
                     .foregroundColor(.white)
-                SecureField("Password", text: $signUpVM.userCredentials.password)
+                SecureField("Password", text: $dataManager.userCredentials.password)
                     .foregroundColor(.white)
                     .textFieldStyle(.plain)
                     .padding(.leading)
@@ -93,7 +93,7 @@ struct SignUpView: View {
                     .frame(width: 350, height: 1)
                     .foregroundColor(.white)
                 Button {
-                    signUpVM.registerUser()
+                    dataManager.registerUser()
                 } label: {
                     Text("Sign up")
                         .bold()
@@ -103,6 +103,10 @@ struct SignUpView: View {
                                 .fill(.linearGradient(colors:[.mint, .blue ], startPoint:.top, endPoint: .bottomTrailing))
                         ).foregroundColor(.white)
                 }
+                
+                NavigationLink(destination: TabBarView(), isActive: $dataManager.isLoggedIn) {
+                                 EmptyView()
+                             }
                 
             }
         }.accentColor(Color(.systemGray4))

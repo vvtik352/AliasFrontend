@@ -10,7 +10,9 @@ import SwiftUI
 
 
 struct Login: View {
-    @State private var login = ""
+    @StateObject var dataManager = DataManager()
+
+    @State private var name = ""
     @State private var password = ""
     
     var body: some View {
@@ -20,12 +22,12 @@ struct Login: View {
                     .foregroundStyle(.linearGradient(colors: [.black, .mint], startPoint: .top, endPoint: .bottomTrailing))
                     .ignoresSafeArea()
                 VStack(spacing: 20) {
-                    TextField("Login", text: $login)
+                    TextField("Login", text:  $dataManager.userCredentials.name)
                         .foregroundColor(Color.white)
                         .textFieldStyle(.plain)
                         .padding()
                         .bold()
-                        .placeholder(when: login.isEmpty) {
+                        .placeholder(when: name.isEmpty) {
                                                 Text("Login")
                                                     .foregroundColor(Color(.systemGray4))
                                                     .bold()
@@ -36,7 +38,16 @@ struct Login: View {
                     Rectangle()
                         .frame(width: 350, height: 1)
                         .foregroundColor(.white)
-                    SecureField("Password", text: $password)
+                    TextField("Email", text: $dataManager.userCredentials.email)
+                        .foregroundColor(.white)
+                        .textFieldStyle(.plain)
+                        .padding()
+                        .bold()
+                    
+                    Rectangle()
+                        .frame(width: 350, height: 1)
+                        .foregroundColor(.white)
+                    SecureField("Password", text:  $dataManager.userCredentials.password)
                         .foregroundColor(.white)
                         .textFieldStyle(.plain)
                         .padding(.leading)
@@ -53,6 +64,7 @@ struct Login: View {
                         .frame(width: 350, height: 1)
                         .foregroundColor(.white)
                     Button {
+                        dataManager.loginUser()
                     } label: {
                         Text("Login")
                             .bold()
@@ -62,6 +74,10 @@ struct Login: View {
                                     .fill(.linearGradient(colors:[.mint, .blue ], startPoint:.top, endPoint: .bottomTrailing))
                             ).foregroundColor(.white)
                     }
+                    
+                    NavigationLink(destination: TabBarView(), isActive: $dataManager.isLoggedIn) {
+                                     EmptyView()
+                                 }
                     
                 }
             }.accentColor(.black)
