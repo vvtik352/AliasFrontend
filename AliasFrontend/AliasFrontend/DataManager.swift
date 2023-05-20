@@ -67,7 +67,6 @@ class DataManager: ObservableObject {
             return
         }
 
-        // create the url with URL
         let url = URL(string: "http://localhost:8080/users/login")!
 
         // create the post request
