@@ -78,6 +78,21 @@ class DataManager: ObservableObject {
         }
     }
     
+    func logout(){
+        sendRequest(urlString: "http://localhost:8080/users/logout") { [weak self] data in
+            do {
+                let tokenResponse = try JSONDecoder().decode(TokenResponse.self, from: data)
+                DispatchQueue.main.async {
+                    self?.token = ""
+                    self?.isLoggedIn = false
+                }
+            } catch {
+                print("Error decoding token: \(error)")
+            }
+        }
+
+    }
+    
     func createGameRoom(gameRoomCreate: GameRoomCreate) {
         guard let url = URL(string: "http://localhost:8080/game-rooms/create") else {
             print("Invalid URL")
