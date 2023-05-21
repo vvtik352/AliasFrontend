@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 struct RoomSettings: View {
-    @ObservedObject var dataManager = DataManager()
-    
+    @EnvironmentObject var dataManager: DataManager
+
     
     @State private var roomName = ""
     @State private var isPrivate = false

@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 struct Main: View {
+    @EnvironmentObject var dataManager: DataManager
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -16,7 +18,7 @@ struct Main: View {
                     .foregroundStyle(.linearGradient(colors: [.black, .mint], startPoint: .top, endPoint: .bottomTrailing))
                     .ignoresSafeArea()
                 VStack {
-                    NavigationLink(destination: RoomSettings()) {
+                    NavigationLink(destination: RoomSettings().environmentObject(dataManager)) {
                         ZStack {
                             
                             RoundedRectangle(cornerRadius: 30, style: .continuous)

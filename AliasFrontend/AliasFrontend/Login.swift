@@ -82,7 +82,7 @@ struct Login: View {
                             ).foregroundColor(.white)
                     }
                     
-                    NavigationLink(destination: TabBarView(), isActive: $dataManager.isLoggedIn) {
+                    NavigationLink(destination: TabBarView().environmentObject(dataManager), isActive: $dataManager.isLoggedIn) {
                                      EmptyView()
                                  }
                     
