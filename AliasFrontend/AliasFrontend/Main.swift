@@ -10,6 +10,7 @@ import SwiftUI
 
 struct Main: View {
     @EnvironmentObject var dataManager: DataManager
+    @State private var navigate = false
 
     var body: some View {
         NavigationView {
@@ -39,6 +40,24 @@ struct Main: View {
                                 .font(.system(size:20, weight:.bold, design: .rounded))
                         }
                     }
+                    Button(action: {
+                                    dataManager.logout()
+                                    navigate = true
+                                }) {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 30, style: .continuous)
+                                            .frame(width: 200, height: 70)
+                                            .foregroundColor(Color.mint)
+                                        Text("Logout")
+                                            .foregroundColor(.white)
+                                            .font(.system(size:20, weight:.bold, design: .rounded))
+                                    }
+                                }
+                                .background(
+                                    NavigationLink(destination: StartPage(), isActive: $navigate) {
+                                        EmptyView()
+                                    }
+                                )
                 }
             }
         }
