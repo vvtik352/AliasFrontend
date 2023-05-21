@@ -11,7 +11,6 @@ import SwiftUI
 struct RoomSettings: View {
     @EnvironmentObject var dataManager: DataManager
 
-    var isNewRoom: Bool
     
     @State private var roomName = ""
     @State private var isPrivate = false
@@ -72,10 +71,8 @@ struct RoomSettings: View {
                     }
                 }
                 Button {
-                    if isNewRoom {
-                        let room = GameRoomCreate(name: self.roomName, isPrivate: self.isPrivate)
-                        self.dataManager.createGameRoom(gameRoomCreate: room)
-                    }
+                    let room = GameRoomCreate(name: self.roomName, isPrivate: self.isPrivate)
+                    self.dataManager.createGameRoom(gameRoomCreate: room)
                     
                 } label: {
                     Text("Save!")
@@ -94,6 +91,6 @@ struct RoomSettings: View {
 
 struct RoomSettings_Previews: PreviewProvider {
     static var previews: some View {
-        RoomSettings(isNewRoom: true)
+        RoomSettings()
     }
 }
