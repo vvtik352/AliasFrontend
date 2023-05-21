@@ -18,7 +18,7 @@ struct Main: View {
                     .foregroundStyle(.linearGradient(colors: [.black, .mint], startPoint: .top, endPoint: .bottomTrailing))
                     .ignoresSafeArea()
                 VStack {
-                    NavigationLink(destination: RoomSettings().environmentObject(dataManager)) {
+                    NavigationLink(destination: RoomSettings(isNewRoom: true).environmentObject(dataManager)) {
                         ZStack {
                             
                             RoundedRectangle(cornerRadius: 30, style: .continuous)

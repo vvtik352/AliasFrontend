@@ -24,17 +24,6 @@ struct TabBarView: View {
                     Image(systemName: "person.3")
                     Text("Rooms")
                 }
-
-//                .tabItem {
-//                    Image(systemName: "sparkle.magnifyingglass")
-//                    Text("Browse")
-//                }
-//
-//                .tabItem {
-//                    Image(systemName: "person.circle.fill")
-//                    Text("Profile")
-//                }
-        
         }
         
     }
