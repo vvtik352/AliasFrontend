@@ -15,6 +15,14 @@ struct RoomView: View {
 //                Rectangle()
 //                    .foregroundColor(.black)
 //                    .ignoresSafeArea()
+                VStack {
+                    VStack {
+                        Text("Команда A")
+                    }
+                    VStack {
+                        Text("Команда B")
+                    }
+                }
                 //название комнаты + настройки + удаление + выход
                 // две команды по 4 человека
                 // кнопка для запуска игры
