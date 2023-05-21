@@ -9,11 +9,22 @@ import Foundation
 import SwiftUI
 
 struct RoomList: View {
+    @EnvironmentObject var dataManager: DataManager
+
     var body: some View {
         NavigationView {
-            ZStack {
-                
-            }
+            List(dataManager.gameRooms) { gameRoom in
+                      VStack(alignment: .leading) {
+                          Text(gameRoom.name)
+//                          Text("Admin: \(gameRoom.admin)")
+                          if let code = gameRoom.invitationCode {
+                              Text("Invitation Code: \(code)")
+                          }
+                      }
+                  }
+                  .onAppear {
+                      dataManager.getRooms()
+                  }
         }
     }
 }

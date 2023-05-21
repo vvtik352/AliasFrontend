@@ -7,16 +7,15 @@
 
 import Foundation
 
-struct GameRoom: Codable {
-    let invitationCode: String
-    let admin: User
-    let id: String
-    let pointsPerWord: Int
-    let creator: User
-    let isPrivate: Bool
-    let name: String
-    
-    struct User: Codable {
-        let id: String
+struct GameRoom: Identifiable, Decodable {
+    var id: UUID
+    var name: String
+    var creator: String
+    var isPrivate: Bool
+    var invitationCode: String?
+    var admin: String
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, creator, isPrivate, invitationCode, admin
     }
 }

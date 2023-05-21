@@ -1,10 +1,3 @@
-//
-//  SignUpViewModel.swift
-//  AliasFrontend
-//
-//  Created by Vladimir on 19.05.2023.
-//
-
 import Foundation
 
 class DataManager: ObservableObject {
@@ -12,25 +5,42 @@ class DataManager: ObservableObject {
     @Published var isLoggedIn = false
     @Published var token = ""
     @Published var userID: String? = nil
+    @Published var gameRooms: [GameRoom] = []
 
-    private func sendRequest(urlString: String, onSuccess: @escaping (_ data: Data) -> Void) {
+    private func createPostRequest(urlString: String, parameters: [String: Any]) -> URLRequest? {
         guard let url = URL(string: urlString) else {
             print("Invalid URL")
-            return
+            return nil
         }
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let parameters: [String: Any] = ["name": userCredentials.name, "email": userCredentials.email, "password": userCredentials.password]
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
         } catch let error {
             print(error.localizedDescription)
-            return
+            return nil
+        }
+        return request
+    }
+    
+    private func createGetRequest(urlString: String) -> URLRequest? {
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
+            return nil
         }
 
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        return request
+    }
+
+    private func sendRequest(_ request: URLRequest, onSuccess: @escaping (_ data: Data) -> Void) {
         let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
             guard let data = data, error == nil else {
                 print("Error occurred: \(String(describing: error))")
@@ -45,30 +55,29 @@ class DataManager: ObservableObject {
                 print("Error: \(String(describing: response))")
             }
         }
-        
 
         task.resume()
     }
-    
+
     func registerUser() {
-        sendRequest(urlString: "http://localhost:8080/users/register") { [weak self] data in
-            do {
-                DispatchQueue.main.async {
-                    self?.loginUser()
-                    self?.isLoggedIn = true
-                }
-            } catch {
-                print("Error decoding token: \(error)")
-            }
+        guard let request = createPostRequest(urlString: "http://localhost:8080/users/register", parameters: ["name": userCredentials.name, "email": userCredentials.email, "password": userCredentials.password]) else {
+            return
+        }
+        sendRequest(request) { [weak self] _ in
+            self?.isLoggedIn = true
+            self?.loginUser()
         }
     }
 
     func loginUser() {
-        sendRequest(urlString: "http://localhost:8080/users/login") { [weak self] data in
+        guard let request = createPostRequest(urlString: "http://localhost:8080/users/login", parameters: ["email": userCredentials.email, "password": userCredentials.password]) else {
+            return
+        }
+        sendRequest(request) { [weak self] data in
             do {
                 let tokenResponse = try JSONDecoder().decode(TokenResponse.self, from: data)
                 DispatchQueue.main.async {
-                    print("JOPAA",tokenResponse.value)
+                    print("JOPAA", tokenResponse.value)
                     self?.token = tokenResponse.value
                     self?.isLoggedIn = true
                 }
@@ -77,55 +86,41 @@ class DataManager: ObservableObject {
             }
         }
     }
-    
-    func logout(){
-        sendRequest(urlString: "http://localhost:8080/users/logout") { [weak self] data in
+
+    func logout() {
+        guard let request = createPostRequest(urlString: "http://localhost:8080/users/logout", parameters: [:]) else {
+            return
+        }
+        sendRequest(request) { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.token = ""
+                self?.isLoggedIn = false
+            }
+        }
+    }
+
+    func createGameRoom(gameRoomCreate: GameRoomCreate) {
+        guard let request = createPostRequest(urlString: "http://localhost:8080/game-rooms/create", parameters: ["name": gameRoomCreate.name, "isPrivate": gameRoomCreate.isPrivate]) else {
+            return
+        }
+        sendRequest(request) { _ in
+            print("Game room successfully created.")
+        }
+    }
+
+    func getRooms() {
+        guard let request = createGetRequest(urlString: "http://localhost:8080/game-rooms/list-all") else {
+            return
+        }
+        sendRequest(request) { [weak self] data in
             do {
-                let tokenResponse = try JSONDecoder().decode(TokenResponse.self, from: data)
+                let rooms = try JSONDecoder().decode([GameRoom].self, from: data)
                 DispatchQueue.main.async {
-                    self?.token = ""
-                    self?.isLoggedIn = false
+                    self?.gameRooms = rooms
                 }
             } catch {
-                print("Error decoding token: \(error)")
+                print("Error decoding GameRooms: \(error)")
             }
         }
-
     }
-    
-    func createGameRoom(gameRoomCreate: GameRoomCreate) {
-        guard let url = URL(string: "http://localhost:8080/game-rooms/create") else {
-            print("Invalid URL")
-            return
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
-
-        do {
-            let jsonData = try JSONEncoder().encode(gameRoomCreate)
-            request.httpBody = jsonData
-        } catch let error {
-            print(error.localizedDescription)
-            return
-        }
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
-                print("Error occurred: \(String(describing: error))")
-                return
-            }
-            
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-                print("Game room successfully created.")
-            } else {
-                print("Error: \(String(describing: response))")
-            }
-        }
-
-        task.resume()
-    }
-
 }

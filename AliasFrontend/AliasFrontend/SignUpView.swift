@@ -105,7 +105,8 @@ struct SignUpView: View {
                         ).foregroundColor(.white)
                 }
                 
-                NavigationLink(destination: TabBarView().environmentObject(dataManager), isActive: $dataManager.isLoggedIn) {
+                NavigationLink(destination: TabBarView().environmentObject(dataManager),
+                               isActive: $dataManager.isLoggedIn) {
                                  EmptyView()
                              }
                 
