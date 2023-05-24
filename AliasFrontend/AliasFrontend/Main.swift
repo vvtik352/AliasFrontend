@@ -13,7 +13,6 @@ struct Main: View {
     @State private var navigate = false
 
     var body: some View {
-        NavigationView {
             ZStack {
                 Rectangle()
                     .foregroundStyle(.linearGradient(colors: [.black, .mint], startPoint: .top, endPoint: .bottomTrailing))
@@ -41,26 +40,25 @@ struct Main: View {
                         }
                     }
                     Button(action: {
-                                    dataManager.logout()
-                                    navigate = true
-                                }) {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 30, style: .continuous)
-                                            .frame(width: 200, height: 70)
-                                            .foregroundColor(Color.mint)
-                                        Text("Logout")
-                                            .foregroundColor(.white)
-                                            .font(.system(size:20, weight:.bold, design: .rounded))
-                                    }
-                                }
-                                .background(
-                                    NavigationLink(destination: StartPage(), isActive: $navigate) {
-                                        EmptyView()
-                                    }
-                                )
+                        dataManager.logout()
+                        navigate = true
+                    }) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 30, style: .continuous)
+                                .frame(width: 200, height: 70)
+                                .foregroundColor(Color.mint)
+                            Text("Logout")
+                                .foregroundColor(.white)
+                                .font(.system(size:20, weight:.bold, design: .rounded))
+                        }
+                    }
+                    .background(
+                        NavigationLink(destination: StartPage(), isActive: $navigate) {
+                            EmptyView()
+                        }
+                    )
                 }
             }
-        }
         .accentColor(Color(.systemGray4))
     }
 }

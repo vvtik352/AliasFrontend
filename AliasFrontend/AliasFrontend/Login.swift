@@ -90,8 +90,6 @@ struct Login: View {
             }.accentColor(.black)
         }.accentColor(.black)
     }
-        
-    
 }
 extension  View {
     func placeholder<Content: View> (

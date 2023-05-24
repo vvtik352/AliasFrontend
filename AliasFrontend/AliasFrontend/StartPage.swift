@@ -39,6 +39,9 @@ struct StartPage: View {
                     }
                 }
             }
+//            .navigationBarBackButtonHidden(true)
+//            .navigationTitle("Start View")
+
         }.accentColor(Color(.systemGray4))
     }
 }
