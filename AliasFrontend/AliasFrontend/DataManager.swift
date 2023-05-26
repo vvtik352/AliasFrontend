@@ -1,21 +1,33 @@
 import Foundation
 
+// View Model.
 class DataManager: ObservableObject {
+    
+    // User data.
     @Published var userCredentials: UserCredentials = UserCredentials(name: "", email: "", password: "")
+    // Shows if user logged in.
     @Published var isLoggedIn = false
+    // User token in the system.
     @Published var token = ""
+    // User id.
     @Published var userId = ""
+    // List of rooms.
     @Published var gameRooms: [GameRoom.WithStringIds] = []
+    // Room that user in.
     @Published var currentRoom: GameRoom?
 
-    
+    // Creates post request.
     private func createPostRequest(urlString: String, parameters: [String: Any]) -> URLRequest? {
+        // Check url.
         guard let url = URL(string: urlString) else {
             print("Invalid URL")
             return nil
         }
 
+        // Create request.
         var request = URLRequest(url: url)
+        
+        // Settings.
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
@@ -28,14 +40,19 @@ class DataManager: ObservableObject {
         return request
     }
     
-    
+    // Creates get request.
     private func createGetRequest(urlString: String) -> URLRequest? {
+        
+        // Check url.
         guard let url = URL(string: urlString) else {
             print("Invalid URL")
             return nil
         }
 
+        // Create request.
         var request = URLRequest(url: url)
+        
+        // Settings.
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
@@ -43,6 +60,7 @@ class DataManager: ObservableObject {
         return request
     }
 
+    // Sending request.
     private func sendRequest(_ request: URLRequest, onSuccess: @escaping (_ data: Data) -> Void) {
         let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
             guard let data = data, error == nil else {
@@ -62,20 +80,31 @@ class DataManager: ObservableObject {
         task.resume()
     }
 
+    
+    // Register user.
     func registerUser() {
+        
+        // Create request with parameters,
         guard let request = createPostRequest(urlString: "http://localhost:8080/users/register", parameters: ["name": userCredentials.name, "email": userCredentials.email, "password": userCredentials.password]) else {
             return
         }
+        
+        // Send request.
         sendRequest(request) { [weak self] _ in
             self?.isLoggedIn = true
             self?.loginUser()
         }
     }
 
+    // Login user.
     func loginUser() {
+        
+        // Create request with parameters.
         guard let request = createPostRequest(urlString: "http://localhost:8080/users/login", parameters: ["email": userCredentials.email, "password": userCredentials.password]) else {
             return
         }
+        
+        // Send request,
         sendRequest(request) { [weak self] data in
             do {
                 let tokenResponse = try JSONDecoder().decode(TokenResponse.self, from: data)
@@ -92,6 +121,8 @@ class DataManager: ObservableObject {
         }
     }
 
+    
+    // User logout.
     func logout() {
         guard let request = createPostRequest(urlString: "http://localhost:8080/users/logout", parameters: [:]) else {
             return
@@ -104,18 +135,13 @@ class DataManager: ObservableObject {
         }
     }
     
+    // Function for getting user data.
     func getProfile() {
         guard let request = createGetRequest(urlString: "http://localhost:8080/users/profile") else {
             return
         }
         sendRequest(request) { [weak self] data in
             do {
-//                                do {
-//                                    let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
-//                                    print("what is here: ",json)
-//                                } catch {
-//                                    print("errorMsg")
-//                                }
                 let user = try JSONDecoder().decode(String.self, from: data)
                 DispatchQueue.main.async {
                     self?.userId = user
@@ -126,6 +152,7 @@ class DataManager: ObservableObject {
         }
     }
 
+    // Function for creating game room.
     func createGameRoom(gameRoomCreate: GameRoomCreate) {
         guard let request = createPostRequest(urlString: "http://localhost:8080/game-rooms/create", parameters: ["name": gameRoomCreate.name, "isPrivate": gameRoomCreate.isPrivate]) else {
             return
@@ -149,6 +176,7 @@ class DataManager: ObservableObject {
         }
     }
 
+    // Deleting game room.
     func deleteRoom() {
         guard let request = createPostRequest(urlString: "http://localhost:8080/game-rooms/close-room", parameters: ["gameRoomId": currentRoom?.id]) else {
             return
@@ -164,7 +192,7 @@ class DataManager: ObservableObject {
         }
     }
 
-    
+    // Getting list of rooms.
     func getRooms() {
         guard let request = createGetRequest(urlString: "http://localhost:8080/game-rooms/list-all") else {
             return
@@ -181,6 +209,7 @@ class DataManager: ObservableObject {
         }
     }
     
+    // Setting new parameters of game room.
     func updateGameRoom(name: String?, isPrivate: Bool?, pointsPerWord: Int?) {
         var parameters: [String: Any] = ["gameRoomId": currentRoom?.id]
         if let name = name {
@@ -222,6 +251,7 @@ class DataManager: ObservableObject {
         }
     }
     
+    // Adding user to the game room.
     func joinRoom(invitationCode: String?) {
           let parameters: [String: Any] = ["gameRoomId": currentRoom?.id]
           guard let request = createPostRequest(urlString: "http://localhost:8080/game-rooms/join-room", parameters: parameters) else {
@@ -232,6 +262,8 @@ class DataManager: ObservableObject {
           }
       }
     
+    
+    // Deleting user from game room. 
     func kickParticipant(userIdToKick: UUID) {
         let parameters: [String: Any] = ["gameRoomId": currentRoom?.id, "userIdToKick": userIdToKick.uuidString]
             guard let request = createPostRequest(urlString: "http://localhost:8080/game-rooms/kick-participant", parameters: parameters) else {
