@@ -10,21 +10,27 @@ import SwiftUI
 
 struct RoomList: View {
     @EnvironmentObject var dataManager: DataManager
+    @Binding var isTabViewHidden: Bool
 
     var body: some View {
         NavigationView {
             List(dataManager.gameRooms) { gameRoom in
-                      VStack(alignment: .leading) {
-                          Text(gameRoom.name)
-//                          Text("Admin: \(gameRoom.admin)")
-                          if let code = gameRoom.invitationCode {
-                              Text("Invitation Code: \(code)")
-                          }
-                      }
-                  }
-                  .onAppear {
-                      dataManager.getRooms()
-                  }
+                NavigationLink(destination: RoomView(isTabViewHidden: $isTabViewHidden).environmentObject(dataManager).onAppear {
+                    dataManager.currentRoom?.id = gameRoom.id
+                    dataManager.currentRoom?.name = gameRoom.name
+                    dataManager.currentRoom?.isPrivate = gameRoom.isPrivate
+                    dataManager.currentRoom?.pointsPerWord = gameRoom.pointsPerWord
+                }) {
+                    VStack(alignment: .leading) {
+                        Text(gameRoom.name)
+                         Text("Admin: \(gameRoom.admin)")
+                    }
+                }
+            }
+            .onAppear {
+                dataManager.getRooms()
+            }
+     
         }
     }
 }

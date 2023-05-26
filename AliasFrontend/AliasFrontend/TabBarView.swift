@@ -11,21 +11,26 @@ import SwiftUI
 
 // Shows bottom tab bar.
 struct TabBarView: View {
-    var body: some View {
-        TabView {
-            Main()
-                .tabItem{
-                    Image(systemName: "house")
-                    Text("Main")
+    @State private var isTabViewHidden = false
 
-                }
-            RoomList()
-                .tabItem {
-                    Image(systemName: "person.3")
-                    Text("Rooms")
-                }
+    var body: some View {
+        if !isTabViewHidden {
+            
+            TabView {
+                Main()
+                    .tabItem{
+                        Image(systemName: "house")
+                        Text("Main")
+                        
+                    }
+                RoomList(isTabViewHidden: $isTabViewHidden)
+                    .tabItem {
+                        Image(systemName: "person.3")
+                        Text("Rooms")
+                    }
+            }
+            
         }
-        
     }
 }
 

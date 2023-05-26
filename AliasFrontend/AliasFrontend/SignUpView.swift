@@ -29,6 +29,13 @@ struct SignUpView: View {
                     .textFieldStyle(.plain)
                     .padding()
                     .bold()
+                    .placeholder(when: dataManager.userCredentials.name.isEmpty) {
+                                            Text("Name")
+                                                .foregroundColor(Color(.systemGray4))
+                                                .bold()
+                                                .padding(.leading)
+                                        }
+
                 Rectangle()
                     .frame(width: 350, height: 1)
                     .foregroundColor(.white)
@@ -38,7 +45,13 @@ struct SignUpView: View {
                     .textFieldStyle(.plain)
                     .padding()
                     .bold()
-                
+                    .placeholder(when: dataManager.userCredentials.email.isEmpty) {
+                                            Text("Email")
+                                                .foregroundColor(Color(.systemGray4))
+                                                .bold()
+                                                .padding(.leading)
+                                        }
+
                 Rectangle()
                     .frame(width: 350, height: 1)
                     .foregroundColor(.white)
@@ -47,6 +60,13 @@ struct SignUpView: View {
                     .textFieldStyle(.plain)
                     .padding(.leading)
                     .bold()
+                    .placeholder(when: dataManager.userCredentials.password.isEmpty) {
+                                            Text("Password")
+                                                .foregroundColor(Color(.systemGray4))
+                                                .bold()
+                                                .padding(.leading)
+                                        }
+
                 Rectangle()
                     .frame(width: 350, height: 1)
                     .foregroundColor(.white)
@@ -62,7 +82,7 @@ struct SignUpView: View {
                         ).foregroundColor(.white)
                 }
                 
-                NavigationLink(destination: Main().environmentObject(dataManager),
+                NavigationLink(destination: TabBarView().environmentObject(dataManager),
                                isActive: $dataManager.isLoggedIn) {
                                  EmptyView()
                              }

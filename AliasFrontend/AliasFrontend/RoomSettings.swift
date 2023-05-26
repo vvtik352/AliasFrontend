@@ -15,6 +15,7 @@ struct RoomSettings: View {
     @State private var roomName = ""
     @State private var isPrivate = false
     @State var myText: String = "invitation code"
+    @State var isRoomCreated = false
     private let pastboard = UIPasteboard.general
     
     
@@ -73,7 +74,7 @@ struct RoomSettings: View {
                 Button {
                     let room = GameRoomCreate(name: self.roomName, isPrivate: self.isPrivate)
                     self.dataManager.createGameRoom(gameRoomCreate: room)
-                    
+                    isRoomCreated = true
                 } label: {
                     Text("Save!")
                         .bold()
@@ -83,6 +84,12 @@ struct RoomSettings: View {
                                 .fill(.linearGradient(colors:[.mint, .blue ], startPoint:.top, endPoint: .bottomTrailing))
                         ).foregroundColor(.white)
                 }
+                
+                .background(
+                    NavigationLink(destination: RoomView(isTabViewHidden:  .constant(false)).environmentObject(dataManager), isActive: $isRoomCreated) {
+                        EmptyView()
+                    }
+                )
                 
             }
         }

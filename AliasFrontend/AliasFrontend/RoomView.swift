@@ -9,8 +9,13 @@ import Foundation
 import SwiftUI
 
 struct RoomView: View {
+    @EnvironmentObject var dataManager: DataManager
+    @Binding var isTabViewHidden: Bool
+
     @State var firstTeam: [String] = ["User1"]
     @State var secondTeam: [String] = []
+    @State private var showEditGameRoomView = false
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -145,20 +150,31 @@ struct RoomView: View {
                 
             }
         
-            .navigationTitle("Название комнаты")
+            .navigationTitle(dataManager.currentRoom?.name ?? "Room name")
             .navigationBarBackButtonHidden()
             .navigationBarTitleTextColor(Color.mint.opacity(0.7))
             // Сделать проверку является ли пользователь админом, неадмину они не доступны
-            .navigationBarItems(leading:  Button {
+            .navigationBarItems(leading:   Button {
+                dataManager.deleteRoom()
             } label: {
                 Label("", systemImage: "trash")
                     .foregroundColor(Color(.systemGray4))
-            }, trailing:  Button {
-            } label: {
-                // При нажатии должно открываться окно RoomSettings, можно сделать похожее вью, но  поменять логику
-                Label("", systemImage: "gearshape")
-                    .foregroundColor(Color(.systemGray4))
-            })
+            }, trailing: HStack {
+                NavigationLink(destination: EditGameRoomView().environmentObject(dataManager), isActive: $showEditGameRoomView) {
+                    EmptyView()
+                }
+                Button {
+                    showEditGameRoomView = true
+                } label: {
+                    Label("", systemImage: "gearshape")
+                        .foregroundColor(Color(.systemGray4))
+                }
+            })      .onAppear {
+                isTabViewHidden = true
+            }
+            .onDisappear {
+                isTabViewHidden = false
+            }
         }
     }
 }
@@ -173,7 +189,9 @@ extension View {
     }
 }
 struct RoomView_Previews: PreviewProvider {
+    @State static var isTabViewHidden = false
+
     static var previews: some View {
-        RoomView()
+        RoomView(isTabViewHidden: $isTabViewHidden)
     }
 }

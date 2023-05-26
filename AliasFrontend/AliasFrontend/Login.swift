@@ -13,6 +13,7 @@ struct Login: View {
     @StateObject var dataManager = DataManager()
 
     @State private var name = ""
+    @State private var email = ""
     @State private var password = ""
     
     var body: some View {
@@ -27,7 +28,7 @@ struct Login: View {
                         .textFieldStyle(.plain)
                         .padding()
                         .bold()
-                        .placeholder(when: name.isEmpty) {
+                        .placeholder(when: dataManager.userCredentials.name.isEmpty) {
                                                 Text("Login")
                                                     .foregroundColor(Color(.systemGray4))
                                                     .bold()
@@ -43,7 +44,7 @@ struct Login: View {
                         .textFieldStyle(.plain)
                         .padding()
                         .bold()
-                        .placeholder(when: name.isEmpty) {
+                        .placeholder(when: dataManager.userCredentials.email.isEmpty) {
                                                 Text("Email")
                                                     .foregroundColor(Color(.systemGray4))
                                                     .bold()
@@ -59,7 +60,7 @@ struct Login: View {
                         .textFieldStyle(.plain)
                         .padding(.leading)
                         .bold()
-                        .placeholder(when: password.isEmpty) {
+                        .placeholder(when: dataManager.userCredentials.password.isEmpty) {
                                                 Text("Password")
                                                     .foregroundColor(Color(.systemGray4))
                                                     .bold()
@@ -71,6 +72,9 @@ struct Login: View {
                         .frame(width: 350, height: 1)
                         .foregroundColor(.white)
                     Button {
+//                        dataManager.userCredentials.name = name
+//                        dataManager.userCredentials.email = email
+//                        dataManager.userCredentials.password = password
                         dataManager.loginUser()
                     } label: {
                         Text("Login")

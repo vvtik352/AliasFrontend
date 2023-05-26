@@ -58,7 +58,10 @@ struct Main: View {
                         }
                     )
                 }
-            }
+        }.navigationTitle($dataManager.userId)
+            .navigationBarTitleTextColor(Color.mint.opacity(0.7))
+            .foregroundColor(.white)
+            .font(.system(size:20, weight:.bold, design: .rounded))
         .accentColor(Color(.systemGray4))
     }
 }

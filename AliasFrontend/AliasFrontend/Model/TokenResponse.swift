@@ -9,4 +9,13 @@ import Foundation
 
 struct TokenResponse: Codable {
     let value: String
+      let id: String
+      let user: User
+
+      enum CodingKeys: String, CodingKey {
+          case value
+          case id
+          case user
+      }
+    
 }
