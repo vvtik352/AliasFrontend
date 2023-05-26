@@ -8,20 +8,25 @@
 import Foundation
 import SwiftUI
 
+// View for room settings.
 struct RoomSettings: View {
+    
+    // View model.
     @EnvironmentObject var dataManager: DataManager
 
     
     @State private var roomName = ""
     @State private var isPrivate = false
     @State var myText: String = "invitation code"
+    // Shows if user creates room or changes settings.
     @State var isRoomCreated = false
+    // For copying text.
     private let pastboard = UIPasteboard.general
     
+   
     
     var body: some View {
         ZStack {
-        
             Rectangle()
                 .foregroundColor(.black)
                 .ignoresSafeArea()
