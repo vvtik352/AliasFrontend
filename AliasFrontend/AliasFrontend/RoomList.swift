@@ -8,13 +8,18 @@
 import Foundation
 import SwiftUI
 
+// View for room list.
 struct RoomList: View {
+    
+    // View Model.
     @EnvironmentObject var dataManager: DataManager
     @Binding var isTabViewHidden: Bool
 
     var body: some View {
         NavigationView {
+            // Show list of rooms.
             List(dataManager.gameRooms) { gameRoom in
+                // navigate to Room View if user choose room.
                 NavigationLink(destination: RoomView(isTabViewHidden: $isTabViewHidden).environmentObject(dataManager).onAppear {
                     dataManager.currentRoom?.id = gameRoom.id
                     dataManager.currentRoom?.name = gameRoom.name

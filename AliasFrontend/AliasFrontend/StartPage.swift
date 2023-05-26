@@ -8,14 +8,17 @@
 import Foundation
 import SwiftUI
 
+// Start page of the app.
 struct StartPage: View {
     var body: some View {
         NavigationView {
             ZStack {
+                // Add background.
                 Rectangle()
                     .foregroundStyle(.linearGradient(colors: [.black, .mint], startPoint: .top, endPoint: .bottomTrailing))
                     .ignoresSafeArea()
                 VStack {
+                    // Buttons for login and sign up.
                     NavigationLink(destination: Login()) {
                         ZStack {
                             
@@ -39,9 +42,8 @@ struct StartPage: View {
                     }
                 }
             }
-//            .navigationBarBackButtonHidden(true)
-//            .navigationTitle("Start View")
 
+            // Change navigation back button.
         }.accentColor(Color(.systemGray4))
     }
 }

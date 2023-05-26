@@ -8,13 +8,11 @@
 import Foundation
 import SwiftUI
 
-
+// View for login.
 struct Login: View {
+    
+    // Model View.
     @StateObject var dataManager = DataManager()
-
-    @State private var name = ""
-    @State private var email = ""
-    @State private var password = ""
     
     var body: some View {
         NavigationView {
@@ -44,6 +42,7 @@ struct Login: View {
                         .textFieldStyle(.plain)
                         .padding()
                         .bold()
+                    // Change text.
                         .placeholder(when: dataManager.userCredentials.email.isEmpty) {
                                                 Text("Email")
                                                     .foregroundColor(Color(.systemGray4))
@@ -60,6 +59,7 @@ struct Login: View {
                         .textFieldStyle(.plain)
                         .padding(.leading)
                         .bold()
+                    // Change text.
                         .placeholder(when: dataManager.userCredentials.password.isEmpty) {
                                                 Text("Password")
                                                     .foregroundColor(Color(.systemGray4))
@@ -72,9 +72,7 @@ struct Login: View {
                         .frame(width: 350, height: 1)
                         .foregroundColor(.white)
                     Button {
-//                        dataManager.userCredentials.name = name
-//                        dataManager.userCredentials.email = email
-//                        dataManager.userCredentials.password = password
+                        // Button action to login user.
                         dataManager.loginUser()
                     } label: {
                         Text("Login")
@@ -85,7 +83,7 @@ struct Login: View {
                                     .fill(.linearGradient(colors:[.mint, .blue ], startPoint:.top, endPoint: .bottomTrailing))
                             ).foregroundColor(.white)
                     }
-                    
+                    // Open TabBarView if user logged in.
                     NavigationLink(destination: TabBarView().environmentObject(dataManager), isActive: $dataManager.isLoggedIn) {
                                      EmptyView()
                                  }
@@ -95,6 +93,8 @@ struct Login: View {
         }.accentColor(.black)
     }
 }
+
+// Extension for TextField.
 extension  View {
     func placeholder<Content: View> (
         when shuldShow: Bool,

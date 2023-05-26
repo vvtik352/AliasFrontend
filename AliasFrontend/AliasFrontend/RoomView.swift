@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 
+
+// Shows room.
 struct RoomView: View {
     @EnvironmentObject var dataManager: DataManager
     @Binding var isTabViewHidden: Bool

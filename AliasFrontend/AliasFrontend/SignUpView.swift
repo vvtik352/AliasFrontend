@@ -8,22 +8,23 @@
 import Foundation
 import SwiftUI
 
-
+// View for sign up.
 struct SignUpView: View {
     
+    // View Model.
     @StateObject var dataManager = DataManager()
 
-    @State private var name = ""
-    @State private var email = ""
-    @State private var password = ""
-    @State private var repeatPassword = ""
     
     var body: some View {
         ZStack {
+            // Set background.
             Rectangle()
                 .foregroundStyle(.linearGradient(colors: [.black, .mint], startPoint: .top, endPoint: .bottomTrailing))
                 .ignoresSafeArea()
+            // Interactive elements.
             VStack(spacing: 20) {
+                
+                // Text field for name.
                 TextField("Name", text: $dataManager.userCredentials.name)
                     .foregroundColor(.white)
                     .textFieldStyle(.plain)
@@ -40,6 +41,8 @@ struct SignUpView: View {
                     .frame(width: 350, height: 1)
                     .foregroundColor(.white)
                 
+                
+                // Text field for email.
                 TextField("Email", text: $dataManager.userCredentials.email)
                     .foregroundColor(.white)
                     .textFieldStyle(.plain)
@@ -55,6 +58,8 @@ struct SignUpView: View {
                 Rectangle()
                     .frame(width: 350, height: 1)
                     .foregroundColor(.white)
+                
+                // Text field for password.
                 SecureField("Password", text: $dataManager.userCredentials.password)
                     .foregroundColor(.white)
                     .textFieldStyle(.plain)
@@ -70,9 +75,14 @@ struct SignUpView: View {
                 Rectangle()
                     .frame(width: 350, height: 1)
                     .foregroundColor(.white)
+                
+                // Button to register.
                 Button {
+                    
+                    // Button action.
                     dataManager.registerUser()
                 } label: {
+                    // Button view.
                     Text("Sign up")
                         .bold()
                         .frame(width:200, height: 40)
@@ -82,13 +92,18 @@ struct SignUpView: View {
                         ).foregroundColor(.white)
                 }
                 
+                
+                // Navigate to TabBarView if user logged in.
                 NavigationLink(destination: TabBarView().environmentObject(dataManager),
                                isActive: $dataManager.isLoggedIn) {
                                  EmptyView()
                              }
                 
             }
-        }.accentColor(Color(.systemGray4))
+        
+        }
+        // Change navigation back button color.
+        .accentColor(Color(.systemGray4))
     }
         
 }
